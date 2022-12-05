@@ -3,14 +3,25 @@
 const title = prompt('Как называется ваш проект?');
 const screens = prompt('Какие типы экранов нужно разработать','Простые, Сложные, Интерактивные');
 const screenPrice = +prompt('Сколько будет стоить данная работа');
-const rollback = 30;
+const rollback = 30; //Откат 30%
 const adaptive = !!prompt('Нужен ли адаптив на сайте', 'OK - да, Отмена - нет');
 const service1 = prompt('Какой дополнительный тип услуги нужен?');
 const servicePrice1 = +prompt('Сколько это будет стоить?');
 const service2 = prompt('Какой еще дополнительный тип услуги нужен?');
 const servicePrice2 = +prompt('Сколько это будет стоить?');
 const fullPrice = +(screenPrice + servicePrice1 + servicePrice2);  
-const servicePercentPrice = Math.ceil(fullPrice - (fullPrice * rollback/100));
+const servicePercentPrice = Math.ceil(fullPrice - (fullPrice * (rollback/100)));
+
+//Выводим данные
+
+console.log('Проект: ' + title);
+console.log('Типы экранов: ' + screens);
+console.log('Адаптив: ' + adaptive);
+console.log('Доп услуга 1: ' + service1 + ' Цена: ' + servicePrice1);
+console.log('Доп услуга 2: ' + service2 + ' Цена: ' + servicePrice2);
+console.log('Итоговая стоимость: ' + fullPrice);
+console.log('Итоговая стоимость с учетом отката: ' + servicePercentPrice);
+
 
 // Скидки
 switch(true){
@@ -27,16 +38,3 @@ switch(true){
         console.log('Что то пошло не так');
     }
 
-
-
-
-
-console.log(servicePrice1);
-console.log(servicePrice2);
-console.log(servicePercentPrice);
-
-
-// console.log('Стоимость верстки экранов ' + screenPrice + ' рублей/долларов/гривен/юани');
-// console.log('Стоимость верстки экранов ' + fullPrice + ' рублей/долларов/гривен/юани');
-// console.log(screens.toLocaleLowerCase().split(", "));
-// console.log("Процент отката посреднику за работу: " + fullPrice * (rollback/100));
