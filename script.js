@@ -2,61 +2,77 @@
 
 const appData = {
     //Объявляем переменные
-    title: '', 
-    screens: '',
+    title: '',
+    screens: [],
     screenPrice: 0,
     adaptive: true,
     rollback: 30, //Откат 30%
     allServicePrices: 0,
     servicePercentPrice: 0,
     fullPrice: 0,
-    service1: '',
-    service2: '',
+    services: {},
+    start:  function() {
+        appData.asking()
+        appData.addPrice()
+        appData.getTitle()
+        appData.getFullPrice()
+        appData.getServicePercentPrices()
+        appData.logger()
+    },
     // Спрашиваем пользователя
     asking: function() {
-        appData.title = prompt('Как называется ваш проект?', 'Проект')
-        appData.screens = prompt('Какие типы экранов нужно разработать','Простые, Сложные, Интерактивные')
-        while (appData.screenPrice < 1) {
-            appData.screenPrice = prompt('Сколько будет стоить данная работа')
+        //Запрос название и его проверка на строку и цифры
+        do {
+        } while (!/\w|[а-я]/iu.test(appData.title = prompt('Как называется ваш проект?')) || appData.isNumber(appData.title))
+        //Типы экранов и их цена
+        for (let i = 0; i < 2; i++) {
+            let name = ''
+            let price = 0
+            do {
+                name = prompt('Какие типы экранов нужно разработать')
+            } while (!/\w|[а-я]/iu.test(name) || appData.isNumber(name))
+            do {
+                price = +prompt('Сколько будет стоить данная работа')
+            }  while (!appData.isNumber(price))
+            appData.screens.push({id: i, name, price})
         }
-        while (!appData.isNumber(appData.screenPrice)){
-            appData.screenPrice = prompt('Сколько будет стоить данная работа')
+        //Дополнительные услуги и их цена
+        for (let i = 0; i < 2; i++) {
+            let name = ''
+            let price = 0
+            do {
+                name = [i] + ' ' + prompt('Какой дополнительный тип услуги нужен?') // Добавляем индификатор для одиннаковых услуг
+            } while (!/\w|[а-я]/iu.test(name) || appData.isNumber(name))
+            do {
+                price = +prompt('Сколько это будет стоить?')
+            } while (!appData.isNumber(price)) 
+            appData.services[name] = +price
         }
-        appData.screenPrice = +appData.screenPrice.trim()
         appData.adaptive = !!confirm('Нужен ли адаптив на сайте')
+    },
+    // Суммируем стоимость экранов и доп услуг
+    addPrice: function() {
+        appData.screenPrice = appData.screens.reduce(function(sum, item){
+            return sum + item.price}, 0) //Суммируем через Reduce
+        for(let key in appData.services) {
+                appData.allServicePrices += appData.services[key]
+            }
     },
     //Проверка на число
     isNumber: function(num) {
         return !isNaN(parseFloat(num)) && isFinite(num)
     },
-    //Сумма всех доп услуг
-    getAllServicePrices: function() {
-    let sum = 0
-    for (let i = 0; i < 2; i++) {
-        if (i === 0) {
-            appData.service1 = prompt('Какой дополнительный тип услуги нужен?')
-        } else if (i === 1) {
-            appData.service2 = prompt('Какой еще дополнительный тип услуги нужен?')        
-        }
-        
-        sum += +prompt('Сколько это будет стоить?')
-        while (!appData.isNumber(sum)) {
-            sum = +prompt('Сколько это будет стоить?')
-        }
-    }
-    return sum
-    },
     //Сумма стоимости верстки и стоимости дополнительных услуг
     getFullPrice: function() {
-    return appData.screenPrice + appData.allServicePrices
+        appData.fullPrice = appData.screenPrice + appData.allServicePrices
     },
     //Переводим title в нормальный вид и обрезаем пробелы вначале
     getTitle: function() {
-    return appData.title.trim()[0].toUpperCase() + appData.title.slice(1).toLowerCase()
+        appData.title = appData.title.trim()[0].toUpperCase() + appData.title.slice(1).toLowerCase()
     },
     // Итоговая стоимость за вычетом процента отката
     getServicePercentPrices: function() {
-        return Math.ceil(appData.fullPrice - (appData.fullPrice * (appData.rollback/100)))},
+        appData.servicePercentPrice =  Math.ceil(appData.fullPrice - (appData.fullPrice * (appData.rollback/100)))},
     // Скидки
     getRollbackMessage: function(price) {
     switch(true){
@@ -71,18 +87,12 @@ const appData = {
         }
     },
     logger: function() {
-        for (let key in appData){
-            console.log(key);
-        }
-    },
-    start:  function() {
-        appData.asking()
-        appData.title = appData.getTitle()
-        appData.allServicePrices = appData.getAllServicePrices()
-        appData.fullPrice = appData.getFullPrice()
-        appData.servicePercentPrice = appData.getServicePercentPrices()
-        appData.logger()
+        console.log(appData.fullPrice)
+        console.log(appData.servicePercentPrice)
+        console.log(appData.screens)
+        console.log(appData.services)
     }
+    
 }
 
 appData.start()
