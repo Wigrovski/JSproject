@@ -1,0 +1,29 @@
+/* montserrat-300 - latin_cyrillic */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    src: local(''),
+        url('../fonts/montserrat-v18-latin_cyrillic-300.woff2') format('woff2'),
+        url('../fonts/montserrat-v18-latin_cyrillic-300.woff') format('woff');
+}
+
+/* montserrat-regular - latin_cyrillic */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+        url('../fonts/montserrat-v18-latin_cyrillic-regular.woff2') format('woff2'),
+        url('../fonts/montserrat-v18-latin_cyrillic-regular.woff') format('woff');
+}
+
+/* montserrat-700 - latin_cyrillic */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''),
+        url('../fonts/montserrat-v18-latin_cyrillic-700.woff2') format('woff2'),
+        url('../fonts/montserrat-v18-latin_cyrillic-700.woff') format('woff');
+}

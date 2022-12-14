@@ -1,5 +1,20 @@
 'use strict'
 
+const titleHead = document.getElementsByTagName('h1')[0]
+const calc = document.getElementsByClassName('handler_btn')[0]
+const cancel = document.getElementsByClassName('handler_btn')[1]
+const addBtn = document.querySelector('.screen-btn')
+const percentItems = document.querySelectorAll('.percent')
+const numberItems = document.querySelectorAll('.number')
+const rollbackInput = document.querySelector('input[type="range"]')
+const rollbackValue = document.querySelector('.range-value')
+const priceTotal = document.getElementsByClassName('total-input')[0]
+const screensNumber = document.getElementsByClassName('total-input')[1]
+const servicePrice = document.getElementsByClassName('total-input')[2]
+const totalPrice = document.getElementsByClassName('total-input')[3]
+const totalPricePercent = document.getElementsByClassName('total-input')[4]
+let screenItems = document.querySelectorAll('.screen')
+
 const appData = {
     //Объявляем переменные
     title: '',
