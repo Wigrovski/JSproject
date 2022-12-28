@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/script.js" defer></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1 class="title" id="title">Калькулятор верстки</h1>
+        </div>
+    </header>
+    <main class="main">
+        <div class="container">
+            <div class="main-box">
+                <div class="main-controls elements">
+                    <div class="main-controls__views element">
+                        <h3>Расчет по типу экрана</h3>
+                        <div class="main-controls__item screen">
+                            <div class="main-controls__select">
+                                <select name="views-select">
+                                    <option value="" selected>Тип экранов</option>
+                                    <option value="500">Простых 500руб * n</option>
+                                    <option value="700">Сложных 700руб * n</option>
+                                    <option value="800">Интерактивных 800руб * n</option>
+                                    <option value="100">Форм 100руб * n</option>
+                                    <option value="300">Слайдеров 300руб * n</option>
+                                    <option value="200">Модальные окна 200руб * n</option>
+                                    <option value="100">Анимация в блоках 100руб * n</option>
+                                </select>
+                            </div>
+                            <div class="main-controls__input">
+                                <input type="text" placeholder="Количество экранов">
+                            </div>
+                        </div>
+
+                        <button class="screen-btn">+</button>
+                    </div>
+                    <div class="main-controls__views element">
+                        <h3>Дополнительно</h3>
+                        <div class="main-controls__item other-items percent">
+                            <div class="main-controls__checkbox">
+                                <input class="custom-checkbox" type="checkbox" name="" id="checkbox-1">
+                                <label for="checkbox-1">Адаптация под планшеты (%)</label>
+                            </div>
+                            <div class="main-controls__input">
+                                <input type="text" placeholder="Стоимость 10% от суммы" value="10" disabled>
+                            </div>
+                        </div>
+                        <div class="main-controls__item  other-items percent">
+                            <div class="main-controls__checkbox">
+                                <input class="custom-checkbox" type="checkbox" name="" id="checkbox-2">
+                                <label for="checkbox-2">Адаптация под мобильные (%)</label>
+                            </div>
+                            <div class="main-controls__input">
+                                <input type="text" placeholder="Стоимость 20% от суммы" value="20" disabled>
+                            </div>
+                        </div>
+                        <div class="main-controls__item other-items number">
+                            <div class="main-controls__checkbox">
+                                <input class="custom-checkbox" type="checkbox" name="" id="checkbox-3">
+                                <label for="checkbox-3">Счётчик Яндекс (руб)</label>
+                            </div>
+                            <div class="main-controls__input">
+                                <input type="text" placeholder="Стоимость" value="300" disabled>
+                            </div>
+                        </div>
+                        <div class="main-controls__item other-items number">
+                            <div class="main-controls__checkbox">
+                                <input class="custom-checkbox" type="checkbox" name="" id="checkbox-4">
+                                <label for="checkbox-4">Счетчик Google A. (руб)</label>
+                            </div>
+                            <div class="main-controls__input">
+                                <input type="text" placeholder="Стоимость" value="400" disabled>
+                            </div>
+                        </div>
+                        <div class="main-controls__item other-items number">
+                            <div class="main-controls__checkbox">
+                                <input class="custom-checkbox" type="checkbox" name="" id="checkbox-5">
+                                <label for="checkbox-5">Отправка форм (руб)</label>
+                            </div>
+                            <div class="main-controls__input">
+                                <input type="text" placeholder="Стоимость" value="200" disabled>
+                            </div>
+                        </div>
+                        <div class="main-controls__item other-items number">
+                            <div class="main-controls__checkbox">
+                                <input class="custom-checkbox" type="checkbox" name="" id="checkbox-6">
+                                <label for="checkbox-6">Выгрузка на сервер (руб)</label>
+                            </div>
+                            <div class="main-controls__input">
+                                <input type="text" placeholder="Стоимость" value="300" disabled>
+                            </div>
+                        </div>
+                        <div class="main-controls__item other-items number">
+                            <div class="main-controls__checkbox">
+                                <input class="custom-checkbox" type="checkbox" name="" id="checkbox-7">
+                                <label for="checkbox-7">Тестирование (руб)</label>
+                            </div>
+                            <div class="main-controls__input">
+                                <input type="text" placeholder="Стоимость" value="300" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main-controls__views cms">
+                        <div class="main-controls__item">
+                            <div class="main-controls__checkbox">
+                                <input class="custom-checkbox" type="checkbox" name="" id="cms-open">
+                                <label for="cms-open">CMS</label>
+                            </div>
+                        </div>
+
+                        <div class="main-controls__item hidden-cms-variants" style="display: none;">
+                            <div class="main-controls__select">
+                                <select name="views-select" id="cms-select">
+                                    <option value="" selected>Тип CMS</option>
+                                    <option value="50">WordPress</option>
+                                    <option value="other">Другое</option>
+                                </select>
+                            </div>
+                            <div class="main-controls__input" style="display: none;">
+                                <input id="cms-other-input" type="text" placeholder="% стоимости за работу">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main-controls__views element">
+                        <h3>Откат посреднику</h3>
+                        <div class="main-controls__item rollback">
+                            <div class="main-controls__range">
+                                <input type="range" step="1" min="0" max="100" value="0">
+                                <span class="range-value">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="main-total">
+                    <div class="main-total__items">
+                        <h3>Итого</h3>
+                        <div class="main-total__item">
+                            <label for="total">Стоимость верстки</label>
+                            <input class="total-input" type="text" disabled id="total" value="0">
+                        </div>
+                        <div class="main-total__item">
+                            <label for="total-count">Количество экранов</label>
+                            <input class="total-input" type="text" disabled id="total-count" value="0">
+                        </div>
+                        <div class="main-total__item">
+                            <label for="total-count-other">Стоимость доп. услуг</label>
+                            <input class="total-input" type="text" disabled id="total-count-other" value="0">
+                        </div>
+                        <div class="main-total__item">
+                            <label for="total-full-count">Итоговая стоимость</label>
+                            <input class="total-input" type="text" disabled id="total-full-count" value="0">
+                        </div>
+                        <div class="main-total__item">
+                            <label for="total-count-rollback">Стоимость с учетом отката</label>
+                            <input class="total-input" type="text" disabled id="total-count-rollback" value="0">
+                        </div>
+                    </div>
+
+                    <div class="main-total__buttons">
+                        <button class="handler_btn" id="start">Рассчитать</button>
+                        <button class="handler_btn" id="reset" style="display: none;">Сброс</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

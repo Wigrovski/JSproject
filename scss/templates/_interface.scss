@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+    background-color: #F0FFFF;
+}
+
+.container {
+    width: 97%;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+    .container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 991px) {
+    .container {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        max-width: 300px;
+    }
+}
