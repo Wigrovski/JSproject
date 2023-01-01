@@ -17,6 +17,9 @@ let screens = document.querySelectorAll('.screen')
 let selectInput = document.querySelectorAll('.main-controls__item.screen select');
 let numScreen = document.querySelectorAll('.main-controls__item.screen input');
 let checkBox = document.querySelectorAll('input[type=checkbox]')
+const cmsBox = document.getElementById('cms-open')
+const cmsOpen = document.querySelector('.hidden-cms-variants')
+const cmsOther = cmsOpen.querySelector('.main-controls__input')
 
 const appData = {
     //Объявляем переменные
@@ -29,29 +32,44 @@ const appData = {
     servicePricesPercent: 0,
     servicePricesNumber: 0,
     servicePercentPrice: 0,
+    priceWP: 0,
     fullPrice: 0,
+    cmsPrice: 0,
     servicesPercent: {},
     servicesNumber: {},
     init: function(){
         this.addTitle()
-        rollbackInput.addEventListener('input', appData.getRollback)
-        calc.addEventListener('click', appData.start)
-        addBtn.addEventListener('click', appData.addScreenBlock)
-        cancel.addEventListener('click', appData.fullReset)
+        this.cmsBlock()
+        cancel.addEventListener('click', this.fullReset.bind(this))
+        rollbackInput.addEventListener('input', this.getRollback.bind(this))
+        calc.addEventListener('click', this.start.bind(this))
+        addBtn.addEventListener('click', this.addScreenBlock)
+        
     },
     checkResult: function(){
         if (totalPrice.value != '0'){
             cancel.style.display = 'block'
             calc.style.display = 'none'
+            this.stopInput()
         } else {
             cancel.style.display = 'none'
         }
     },
+    stopInput: function() {
+        selectInput = document.querySelectorAll('.main-controls__item.screen select')
+        numScreen = document.querySelectorAll('.main-controls__item.screen input')
+        selectInput.forEach(select => select.disabled = true)
+        numScreen.forEach(input => input.disabled = true)
+    },
+
     fullReset: function() {
         screens = document.querySelectorAll('.screen')
         selectInput = document.querySelectorAll('.main-controls__item.screen select')
         numScreen = document.querySelectorAll('.main-controls__item.screen input')
         checkBox = document.querySelectorAll('input[type=checkbox]')
+
+        selectInput.forEach(select => select.disabled = false)
+        numScreen.forEach(input => input.disabled = false)
 
         for (let i = 1; i < screens.length; i++) {
             screens[i].remove()
@@ -59,51 +77,56 @@ const appData = {
 
         selectInput.forEach(select => {select.selectedIndex = 0})
         numScreen.forEach(input => {input.value = ''})
-        checkBox.forEach((checkbox) => {checkbox.checked = false})
+        checkBox.forEach(checkbox => {checkbox.checked = false})
+        cmsOpen.style.display = 'none'
 
         priceTotal.value = 0,
         totalServicePrice.value = 0,
         totalPricePercent.value = 0,
         totalPrice.value = 0,
         screensNumber.value = 0,
-        appData.screens = [],
-        appData.screenPrice = 0,
-        appData.screenCount = 0,
-        appData.adaptive = true,
-        appData.rollback = 0,
-        appData.servicePricesPercent = 0,
-        appData.servicePricesNumber = 0,
-        appData.servicePercentPrice = 0,
-        appData.fullPrice = 0,
-        appData.servicesPercent = {},
-        appData.servicesNumber = {},
-        cancel.style.display = 'none'
-        calc.style.display = 'block'
+        this.screens = [],
+        this.screenPrice = 0,
+        this.screenCount = 0,
+        this.adaptive = true,
+        this.rollback = 0,
+        this.priceWP = 0,
+        this.cmsPrice = 0,
+        this.servicePricesPercent = 0,
+        this.servicePricesNumber = 0,
+        this.servicePercentPrice = 0,
+        this.fullPrice = 0,
+        this.servicesPercent = {},
+        this.servicesNumber = {},
+        cancel.style.display = 'none',
+        calc.style.display = 'block',
+        rollbackInput.value = 0
+        rollbackValue.textContent = 0
     },
 
     getRollback: function() {
             rollbackValue.textContent = rollbackInput.value + ' %'
-            totalPricePercent.value = Math.ceil(appData.fullPrice - (appData.fullPrice * rollbackInput.value/100)) 
-            appData.rollback = rollbackInput.value    
+            totalPricePercent.value = Math.ceil(this.fullPrice - (this.fullPrice * rollbackInput.value/100)) 
+            this.rollback = rollbackInput.value    
     },
 
     addTitle: function() {
         document.title = title.textContent
     },
     start:  function() {
-        appData.checkResult()
-        appData.addScreens()
-        appData.addServices()
-        appData.addPrice()
-        appData.showResult()
-        appData.checkResult()
+        this.checkResult()
+        this.addScreens()
+        this.addServices()
+        this.addPrice()
+        this.showResult()
+        this.checkResult()
 
     },
     showResult:  function() {
-        priceTotal.value = appData.screenPrice
-        totalServicePrice.value = appData.servicePricesPercent + appData.servicePricesNumber
-        totalPricePercent.value = appData.servicePercentPrice
-        totalPrice.value = appData.fullPrice
+        priceTotal.value = this.screenPrice
+        totalServicePrice.value = this.servicePricesPercent + this.servicePricesNumber
+        totalPricePercent.value = this.servicePercentPrice
+        totalPrice.value = this.fullPrice
 
     },
     addScreens: function() {
@@ -111,6 +134,7 @@ const appData = {
         screens.forEach(function(screen, index) {
             const select = screen.querySelector('select')
             const input = screen.querySelector('input')
+            
             const selectName = select.options[select.selectedIndex].textContent
             if (input.value !== '' && select.value !== '') {
                 appData.screens.push({
@@ -119,24 +143,23 @@ const appData = {
                     price: +select.value * +input.value,
                     count: +input.value})
             } else {appData.screens.splice(0)}
-            
         })
     },
     addServices: function() {
-        percentItems.forEach(function(item) {
+        percentItems.forEach((item) => {
             const check = item.querySelector('input[type=checkbox]')
             const label = item.querySelector('label')
             const input = item.querySelector('input[type=text]')
             if (check.checked) {
-                appData.servicesPercent[label.textContent] = +input.value
+                this.servicesPercent[label.textContent] = +input.value
             }            
         })
-        numberItems.forEach(function(item) {
+        numberItems.forEach((item) => {
             const check = item.querySelector('input[type=checkbox]')
             const label = item.querySelector('label')
             const input = item.querySelector('input[type=text]')
             if (check.checked) {
-                appData.servicesNumber[label.textContent] = +input.value
+                this.servicesNumber[label.textContent] = +input.value
             }            
         })
     },
@@ -146,24 +169,38 @@ const appData = {
         cloneScreen.querySelector('input[type=text]').value = ''
         screens[screens.length - 1].after(cloneScreen)
     },
+    //Блок  по CMS
+    cmsBlock: function() {
+        cmsBox.addEventListener('change', (e) => {
+            e.target.checked ? cmsOpen.style.display = 'flex' : cmsOpen.style.display = 'none'                   
+        } )
+        const cmsSelect = document.getElementById('cms-select')
+        cmsSelect.addEventListener('change', (e) => {
+            e.target.value == 'other' ? cmsOther.style.display = 'flex' : cmsOther.style.display = 'none'
+            e.target.value == 50 ? this.priceWP = 2 : this.priceWP = 0
+        })           
+    },
     // Суммируем стоимость экранов и доп услуг
     addPrice: function() {
-        for (let screen of appData.screens) {
-            appData.screenCount += +screen.count
+        screens = document.querySelectorAll('.screen')
+        for (let screen of this.screens) {
+            this.screenCount += +screen.count
         }
-        for (let screen of appData.screens) {
-            appData.screenPrice += +screen.price
+        for (let screen of this.screens) {
+            this.screenPrice += +screen.price
         }
-        for(let key in appData.servicesNumber) {
-                appData.servicePricesNumber += appData.servicesNumber[key]
+        for(let key in this.servicesNumber) {
+                this.servicePricesNumber += this.servicesNumber[key]
             }
-        for(let key in appData.servicesPercent) {
-                appData.servicePricesPercent += appData.screenPrice * (appData.servicesPercent[key]/100)
+        for(let key in this.servicesPercent) {
+                this.servicePricesPercent += this.screenPrice * (this.servicesPercent[key]/100)
             }
-
-        appData.fullPrice = appData.screenPrice + appData.servicePricesPercent + appData.servicePricesNumber
-        appData.servicePercentPrice =  Math.ceil(appData.fullPrice - appData.fullPrice * appData.rollback/100)
-        screensNumber.value = appData.screenCount
+            if (this.priceWP != 0) {
+                this.cmsPrice = this.screenPrice + this.servicePricesPercent + this.servicePricesNumber
+                this.fullPrice = this.cmsPrice/this.priceWP + this.cmsPrice
+            } else {this.fullPrice = this.screenPrice + this.servicePricesPercent + this.servicePricesNumber}        
+        this.servicePercentPrice =  Math.ceil(this.fullPrice - this.fullPrice * this.rollback/100)
+        screensNumber.value = this.screenCount
     },
     // Скидки
     getRollbackMessage: function(price) {
